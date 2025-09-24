@@ -2,21 +2,21 @@
 import React from "react";
 
 function TableHeader() {
-  return (
+return (
     <thead>
-      <tr>
+    <tr>
         <th>Name</th>
         <th>Job</th>
         <th>DELETE</th>
-      </tr>
+    </tr>
     </thead>
-  );
+);
 }
 
 function TableBody(props) {
-  const rows = props.characterData.map((row, index) => {
+const rows = props.characterData.map((row, index) => {
     return (
-      <tr key={index}>
+    <tr key={index}>
         <td>{row.name}</td>
         <td>{row.job}</td>
         <td>
@@ -24,26 +24,26 @@ function TableBody(props) {
                 Delete
             </button>
         </td>
-      </tr>
+    </tr>
     );
-   }
-  );
-  return (
-      <tbody>
+}
+);
+return (
+    <tbody>
         {rows}
-       </tbody>
-   );
+    </tbody>
+);
 }
 
 function Table(props) {
     return (
-      <table>
+    <table>
         <TableHeader />
         <TableBody 
             characterData={props.characterData} 
             removeCharacter={props.removeCharacter}
         />
-      </table>
+    </table>
     );
 }
 export default Table;
