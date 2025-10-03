@@ -7,10 +7,29 @@ import Form from "./Form";
 function MyApp() {
     const [characters, setCharacters] = useState([]);
 
-    function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
-        return i !== index;
+    function deleteUser(id) {
+        const promise = fetch("http://localhost:8000/users/" + id, {
+            method: "DELETE"
         });
+
+        return promise;
+    }
+
+    function removeOneCharacter(index) {
+        const id = characters[index].id
+        deleteUser(id)
+            .then(response => {
+                if (response.status===204) {
+                    const updated = characters.filter((character, i) => {
+                        return i !== index;
+                    });
+                    setCharacters(updated);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        
         setCharacters(updated);
     }
 
@@ -40,7 +59,13 @@ function MyApp() {
 
     function updateList(person) { 
         postUser(person)
-            .then(() => setCharacters([...characters, person]))
+            .then(response => {
+                if (response.status===201) {
+                    return response.json();
+                }
+                console.log("incorrect status")
+            })
+            .then((json) => setCharacters([...characters, json]))
             .catch((error) => {
                 console.log(error);
             })

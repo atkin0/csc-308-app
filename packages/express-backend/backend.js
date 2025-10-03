@@ -97,10 +97,10 @@ const addUser = (user) => {
 };
 
 app.post("/users", (req, res) => {
-  console.log(req.body)
   const userToAdd = req.body;
+  userToAdd.id = Math.floor(1000 * Math.random())
   addUser(userToAdd);
-  res.send();
+  res.status(201).send(userToAdd);
 });
 
 const deleteUser = (id) => {
@@ -116,7 +116,7 @@ app.delete("/users/:id", (req, res) => {
     res.status(404).send("User not found.");
   } else {
     deleteUser(id);
-    res.send();
+    res.status(204).send();
   }
 });
 
